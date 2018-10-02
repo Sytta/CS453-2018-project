@@ -45,6 +45,10 @@ public:
     void unlock() {
         release();
     }
+
+private:
+    std::atomic_bool isLocked;
+    bool expected;
 };
 
 // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――

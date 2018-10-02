@@ -18,6 +18,7 @@
 **/
 bool lock_init(struct lock_t* lock __attribute__((unused))) {
     // Code here
+    atomic_store(&(lock->isLocked), false);
     return true;
 }
 
@@ -26,6 +27,7 @@ bool lock_init(struct lock_t* lock __attribute__((unused))) {
 **/
 void lock_cleanup(struct lock_t* lock __attribute__((unused))) {
     // Code here
+
 }
 
 /** [thread-safe] Acquire the given lock, wait if it has already been acquired.
@@ -33,6 +35,10 @@ void lock_cleanup(struct lock_t* lock __attribute__((unused))) {
 **/
 void lock_acquire(struct lock_t* lock __attribute__((unused))) {
     // Code here
+    bool expected = false;
+    while(!atomic_compare_exchange_strong(&(lock->isLocked), &expected, true)) {
+        expected = false;
+    }
 }
 
 /** [thread-safe] Release the given lock.
@@ -40,6 +46,7 @@ void lock_acquire(struct lock_t* lock __attribute__((unused))) {
 **/
 void lock_release(struct lock_t* lock __attribute__((unused))) {
     // Code here
+        atomic_store(&(lock->isLocked), false);
 }
 
 // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――

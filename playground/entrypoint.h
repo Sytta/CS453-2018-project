@@ -26,12 +26,14 @@
 // External headers
 #include <stdbool.h>
 #include <stddef.h>
-
+#include <stdatomic.h>
 // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
 
 /** Your lock type.
 **/
-struct lock_t {};
+struct lock_t {
+    atomic_bool isLocked;
+};
 
 bool lock_init(struct lock_t*);
 void lock_cleanup(struct lock_t*);

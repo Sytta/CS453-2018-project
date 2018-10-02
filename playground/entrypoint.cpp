@@ -19,6 +19,7 @@ extern "C" {
 **/
 Lock::Lock() {
     // Code here
+    isLocked = false;
 }
 
 /** Lock destructor.
@@ -31,6 +32,12 @@ Lock::~Lock() {
 **/
 void Lock::acquire() {
     // Code here
+    //std::cout << "Aquiring lock" << std::endl;
+    while(!isLocked.compare_exchange_strong(expected, true, std::memory_order_acquire))
+    {
+        // Expected is swapped with 'true' if compare_exchang fails
+        expected = false;
+    }
 }
 
 /** [thread-safe] Release the given lock.
@@ -38,6 +45,7 @@ void Lock::acquire() {
 **/
 void Lock::release() {
     // Code here
+    isLocked.store(false, std::memory_order_release);
 }
 
 // ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
