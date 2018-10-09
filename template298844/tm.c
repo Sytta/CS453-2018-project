@@ -148,3 +148,26 @@ bool tm_write(shared_t shared as(unused), tx_t tx as(unused), void const* source
     // TODO: tm_write(shared_t, tx_t, void const*, size_t, void*)
     return false;
 }
+
+/** [thread-safe] Memory allocation in the given transaction.
+ * @param shared Shared memory region associated with the transaction
+ * @param tx     Transaction to use
+ * @param size   Allocation requested size (in bytes), must be a positive multiple of the alignment
+ * @param target Pointer in private memory receiving the address of the first byte of the newly allocated, aligned segment
+ * @return Whether the whole transaction can continue (success/nomem), or not (abort_alloc)
+**/
+alloc_t tm_alloc(shared_t shared as(unused), tx_t tx as(unused), size_t size as(unused), void** target as(unused)) {
+    // TODO: tm_alloc(shared_t, tx_t, size_t, void**)
+    return abort_alloc;
+}
+
+/** [thread-safe] Memory freeing in the given transaction.
+ * @param shared Shared memory region associated with the transaction
+ * @param tx     Transaction to use
+ * @param target Address of the first byte of the previously allocated segment to deallocate
+ * @return Whether the whole transaction can continue
+**/
+bool tm_free(shared_t shared as(unused), tx_t tx as(unused), void* target as(unused)) {
+    // TODO: tm_free(shared_t, tx_t, void*)
+    return false;
+}
