@@ -1265,7 +1265,7 @@ int main(int argc, char** argv) {
                     res = measure(bank, nbworkers, nbrepeats, seed, maxtick);
                 } catch (Exception::TooSlow const& err) { // Special case since interrupting threads may lead to corrupted state
                     ::std::cerr << "⎪ *** EXCEPTION - main thread ***" << ::std::endl << "⎩ " << err.what() << ::std::endl;
-                    ::std::quick_exit(2);
+                    ::std::exit(2);
                 }
                 auto correct = ::std::get<0>(res) && bank.check();
                 auto perf    = static_cast<double>(::std::get<1>(res));
